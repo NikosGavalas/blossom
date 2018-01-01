@@ -246,7 +246,7 @@ function generateContentHTML(post) {
 	const dom = new JSDOM(base, JSDOM_options);
 	var $ = jquery(dom.window);
 
-	// the line below is an ugly patch
+	// to my future self: the line below is causing the bug you are searching.
 	$('#favicon').attr('href', './' + config.site.favicon)
 
 	$('#main').append($('<p>').addClass('post-date')

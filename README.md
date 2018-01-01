@@ -9,7 +9,7 @@ Live demo [here](https://nickgavalas.com).
 ## Features
 
 - Easy deployment - no need for database
-- Configurable by a simple file (config.js)
+- Configurable by a simple file (`config.js`)
 - Full markdown support plus LaTeX for math
 - Search Engine optimized and Open Graph tags
 - Fully Responsive for mobile view etc.
@@ -40,3 +40,5 @@ Future dev:
 - finish the meta tags
 - add optional pages in the navbar (about, contact, etc...)
 - make the code cleaner
+- Add modals to the index page for the social links that cant open to a new page (e.g. skype name).
+- Add a simple CLI to the script, now it is very depended on directory structure
