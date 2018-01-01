@@ -40,3 +40,6 @@ Session.vim
 .netrwhist
 *~
 
+# Custom ignores
+blog
+
