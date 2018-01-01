@@ -37,8 +37,9 @@ After generating, just throw the generated /blog directory into Apache or Nginx 
 I built this for myself, but I do hope it is useful to others too. For bugs and suggestions, open issues and I 'll review them.
 
 Future dev:
-- finish the meta tags
-- add optional pages in the navbar (about, contact, etc...)
-- make the code cleaner
+- Finish the meta tags
+- Add optional pages in the navbar (about, contact, etc...)
+- Make the code cleaner
 - Add modals to the index page for the social links that cant open to a new page (e.g. skype name).
 - Add a simple CLI to the script, now it is very depended on directory structure
+- Add a link to this project in the footer
