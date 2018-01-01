@@ -4,6 +4,8 @@ A minimal personal blog generator.
 
 You write your blogposts in markdown, they get rendered and integrated into a static website.
 
+Live demo [here](https://nickgavalas.com).
+
 ## Features
 
 - Easy deployment - no need for database
@@ -33,3 +35,8 @@ After generating, just throw the generated /blog directory into Apache or Nginx 
 ## About the project
 
 I built this for myself, but I do hope it is useful to others too. For bugs and suggestions, open issues and I 'll review them.
+
+Future dev:
+- finish the meta tags
+- add optional pages in the navbar (about, contact, etc...)
+- make the code cleaner

@@ -7,5 +7,4 @@ WORKDIR /home/node
 
 EXPOSE 8080
 
-RUN npm install
 

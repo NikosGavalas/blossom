@@ -41,7 +41,7 @@ module.exports = {
 		"linkedin": "https://www.linkedin.com/in/nikosgavalas/",
 		"twitter": "www.twitter.com/mytwitterlinkhere",
 		"instagram": "johndoe's boring pictures",
-		"github": "",
+		"github": "mygithub",
 		"gitea": "https://code.nickgavalas.com/nik",
 		"gpg": "", 
 		"bitcoin": "mybitcoin address?",

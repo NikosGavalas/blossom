@@ -28,11 +28,11 @@ $$\binom{a}{b}$$
 
 Also add images of custom size:
 
-![shyguy](./example_image.png =100x100)
+![example_image1](./example_image.png =100x100)
 
 Or full:
 
-![boo](./example_image2.png)
+![example_image2](./example_image2.png)
 
 They are also responsive. 
 
