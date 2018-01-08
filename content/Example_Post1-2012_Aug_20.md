@@ -23,7 +23,7 @@ int main(void)
 > Blockquote
 
 <div style="text-align:center;">
-you can align center to the center like this.
+you can align text to the center like this.
 </div>
 
 ----
