@@ -38,6 +38,7 @@ I built this for myself, but I do hope it is useful to others too. For bugs and 
 
 Future dev:
 - Finish the meta tags
+- Fix CSS margings on headers instead of adding breaks around
 - Add optional pages in the navbar (about, contact, etc...)
 - Make the code cleaner
 - Add modals to the index page for the social links that cant open to a new page (e.g. skype name).
