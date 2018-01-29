@@ -92,6 +92,11 @@
 			color:inherit;
 		}
 
+		h1, h2, h3, h4, h5 {
+			padding-top: 20px;
+			padding-bottom: 20px;
+		}
+
 	</style>
 </head>
 
@@ -171,13 +176,6 @@
 			// required to help tables and blockquotes work with bootstrap
 			$('table').addClass('table');
 			$('blockquote').addClass('blockquote');
-	
-			// adding space before and after headers.
-			$('h1').before('<br>').after('<br>');
-			$('h2').before('<br>').after('<br>');
-			$('h3').before('<br>').after('<br>');
-			$('h4').before('<br>').after('<br>');
-			$('h5').before('<br>').after('<br>');
 
 			// make images centered and responsive
 			$('img').addClass('mx-auto d-block img-fluid');
