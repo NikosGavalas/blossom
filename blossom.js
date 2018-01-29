@@ -9,7 +9,6 @@ var JSDOM_options = { contentType: "text/html" };
 var crypto = require('crypto');
 var md5 = crypto.createHash('md5');
 
-const config = require('./config');
 var Post = require('./post');
 
 var comm = require('commander');
@@ -17,10 +16,14 @@ comm
 	.version('0.1.0')
 	.option('-o, --output <item>', 'output directory')
 	.option('-i, --input <item>', 'input directory')
+	.option('-c, --config <item>', 'config.js file location')
 	.parse(process.argv);
 
 var OUTDIR = comm.output || 'blog';
 var INDIR = comm.input || 'sample_content';
+var config = comm.config || './config';
+const CONFIG = require(config);
+
 
 /* Create an array of all the posts */
 var posts = [];
@@ -54,21 +57,21 @@ fs.readdirSync(INDIR, 'utf8').forEach(filename => {
 posts.sort((a, b) => { return (a.getDate() >= b.getDate() ? -1 : 1) });
 
 function backgroundColor() {
-	let col = config.navbar.background_color;
+	let col = CONFIG.navbar.background_color;
 
 	return col == '' ||
 		col == ' ' ?
-		'bg-' + config.navbar.theme : '" style="background-color: ' + col + '; "';
+		'bg-' + CONFIG.navbar.theme : '" style="background-color: ' + col + '; "';
 }
 
 var base = fs.readFileSync('base.html', 'utf8');
-base = base.replace(/@{description}/g, config.meta.description)
-	.replace(/@{author}/g, config.meta.author)
-	.replace(/@{keywords}/, config.meta.keywords)
-	.replace(/@{title}/, config.site.title)
-	.replace(/@{favicon}/, config.site.favicon)
-	.replace(/@{brand}/, config.navbar.brand)
-	.replace(/@{theme}/g, config.navbar.theme)
+base = base.replace(/@{description}/g, CONFIG.meta.description)
+	.replace(/@{author}/g, CONFIG.meta.author)
+	.replace(/@{keywords}/, CONFIG.meta.keywords)
+	.replace(/@{title}/, CONFIG.site.title)
+	.replace(/@{favicon}/, CONFIG.site.favicon)
+	.replace(/@{brand}/, CONFIG.navbar.brand)
+	.replace(/@{theme}/g, CONFIG.navbar.theme)
 	.replace(/@{background-color}/, backgroundColor());
 
 
@@ -82,7 +85,7 @@ function loadImage(imageFileName) {
 		fs.copyFileSync(src, dst);
 }
 
-loadImage(config.site.favicon);
+loadImage(CONFIG.site.favicon);
 
 function generateBlogHomeHTML(posts) {
 	const dom = new JSDOM(base, JSDOM_options);
@@ -97,7 +100,7 @@ function generateBlogHomeHTML(posts) {
 			' - ' + post.getDate()
 		)
 
-		if (config.blog.content_preview) {
+		if (CONFIG.blog.content_preview) {
 			list.append(
 				$('<p>').addClass('text-muted').text(
 					$(post.getSummary()).text()
@@ -111,8 +114,8 @@ function generateBlogHomeHTML(posts) {
 
 	var latestPost = $('<ul>').append(archiveList.children().first().clone());
 
-	$('#main').append($('<h3>').text(config.blog.heading))
-		.append($('<p>').text(config.blog.message))
+	$('#main').append($('<h3>').text(CONFIG.blog.heading))
+		.append($('<p>').text(CONFIG.blog.message))
 		.append('<hr>')
 		.append($('<h4>').text('Latest Post'))
 		.append('<hr>')
@@ -141,19 +144,18 @@ function calculateGravatarHash(email) {
 	email = email.replace(/ /g, '').toLowerCase();
 
 	var ret = md5.update(email).digest('hex').toString();
-	console.log(ret);
 	return ret;
 }
 
 function getAvatar() {
 
-	if (config.home.avatar.source != "") {
-		loadImage(config.home.avatar.source);
+	if (CONFIG.home.avatar.source != "") {
+		loadImage(CONFIG.home.avatar.source);
 	}
 
-	return config.home.avatar.source == "" ?
-		'https://www.gravatar.com/avatar/' + calculateGravatarHash(config.social.email) :
-		'./content/' + config.home.avatar.source;
+	return CONFIG.home.avatar.source == "" ?
+		'https://www.gravatar.com/avatar/' + calculateGravatarHash(CONFIG.social.email) + '?s=290' :
+		'./content/' + CONFIG.home.avatar.source;
 }
 
 function generateIndexHTML() {
@@ -162,27 +164,27 @@ function generateIndexHTML() {
 
 	$('#main').append(
 		$('<img>').attr({
-			'class': config.home.avatar.circle ? 'rounded-circle' : 'rounded',
+			'class': CONFIG.home.avatar.circle ? 'rounded-circle' : 'rounded',
 			'src': getAvatar(),
 			'alt': 'avatar',
-			'width': config.home.avatar.size,
-			'height': config.home.avatar.size
+			'width': CONFIG.home.avatar.size,
+			'height': CONFIG.home.avatar.size
 		})
 	).append(
 		$('<div>').addClass('col-md-10 offset-md-1').attr('id', 'info').append(
-				$('<h1>').addClass('text-center').text(config.home.name)
+				$('<h1>').addClass('text-center').text(CONFIG.home.name)
 			).append(
-				$('<h5>').html(config.home.bio)
+				$('<h5>').html(CONFIG.home.bio)
 			).append(
-				$('<h5>').html(config.home.info)
+				$('<h5>').html(CONFIG.home.info)
 			).append(
-				$('<h5>').html(config.home.interests)
+				$('<h5>').html(CONFIG.home.interests)
 			)	
 	);
 
 	var countNonEmpty = 0;
-	for (var key in config.social) {
-		if (config.social[key] != "") 
+	for (var key in CONFIG.social) {
+		if (CONFIG.social[key] != "") 
 			countNonEmpty++;
 	}
 
@@ -193,8 +195,8 @@ function generateIndexHTML() {
 			$('<ul>').attr('id', 'social-list').addClass('list-inline')
 		)
 
-		for (var key in config.social) {
-			var current = config.social[key];
+		for (var key in CONFIG.social) {
+			var current = CONFIG.social[key];
 
 			if (current != "") {
 				switch (key) {
@@ -256,7 +258,7 @@ function generateContentHTML(post) {
 	var $ = jquery(dom.window);
 
 	// to my future self: the line below is causing the favicon bug you seek.
-	$('#favicon').attr('href', './' + config.site.favicon)
+	$('#favicon').attr('href', './' + CONFIG.site.favicon)
 
 	$('#main').append($('<p>').addClass('post-date')
 		.append(post.getDate()))
