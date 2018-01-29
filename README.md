@@ -41,4 +41,4 @@ Future dev:
 - Add optional pages in the navbar (about, contact, etc...)
 - Make the code cleaner
 - Add modals to the index page for the social links that cant open to a new page (e.g. skype name).
-- Add a link to this project in the footer
+
