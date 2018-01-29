@@ -12,13 +12,22 @@ var md5 = crypto.createHash('md5');
 const config = require('./config');
 var Post = require('./post');
 
+var comm = require('commander');
+comm
+	.version('0.1.0')
+	.option('-o, --output <item>', 'output directory')
+	.option('-i, --input <item>', 'input directory')
+	.parse(process.argv);
+
+var OUTDIR = comm.output || 'blog';
+var INDIR = comm.input || 'sample_content';
 
 /* Create an array of all the posts */
 var posts = [];
 
 /* Populate it */
-if (!fs.existsSync('content')) {
-	console.log('Please create a directory "content" with your markdown files first.');
+if (!fs.existsSync(INDIR)) {
+	console.log('Please create a directory "content" with your markdown files first, or point to an existing one using the "-i" option');
 	process.exit(1);
 }
 
@@ -28,16 +37,16 @@ function createDir(path) {
 	}
 }
 
-createDir('blog');
+createDir(OUTDIR);
 
-fs.readdirSync('content', 'utf8').forEach(filename => {
+fs.readdirSync(INDIR, 'utf8').forEach(filename => {
 	var isMd = /^.+\.md$/;
 
 	if (isMd.test(filename)) {
 		var tokens = filename.replace(/_/g, ' ').replace(/.md/, '').split('-');
 
 		posts.push(new Post(tokens[0], tokens[1], filename,
-			fs.readFileSync('content/' + filename, 'utf8')));
+			fs.readFileSync(INDIR + '/' + filename, 'utf8')));
 	}
 });
 
@@ -63,11 +72,11 @@ base = base.replace(/@{description}/g, config.meta.description)
 	.replace(/@{background-color}/, backgroundColor());
 
 
-createDir('blog/content');
+createDir(OUTDIR + '/content');
 
 function loadImage(imageFileName) {
-	var src = 'content/' + imageFileName;
-	var dst = 'blog/content/' + imageFileName;
+	var src = INDIR + '/' + imageFileName;
+	var dst = OUTDIR + '/content/' + imageFileName;
 
 	if (!fs.existsSync(dst))
 		fs.copyFileSync(src, dst);
@@ -112,7 +121,7 @@ function generateBlogHomeHTML(posts) {
 		.append('<hr>')
 		.append(archiveList);
 
-	fs.writeFileSync('blog/blog.html', dom.serialize());
+	fs.writeFileSync(OUTDIR + '/blog.html', dom.serialize());
 
 	return;
 }
@@ -235,12 +244,12 @@ function generateIndexHTML() {
 		}		
 	}
 
-	fs.writeFileSync('blog/index.html', dom.serialize());
+	fs.writeFileSync(OUTDIR + '/index.html', dom.serialize());
 }
 
 generateIndexHTML();
 
-createDir('blog/content');
+createDir(OUTDIR + '/content');
 
 function generateContentHTML(post) {
 	const dom = new JSDOM(base, JSDOM_options);
@@ -262,6 +271,6 @@ function generateContentHTML(post) {
 }
 
 posts.forEach(post => {
-	fs.writeFileSync('blog/content/' + post.getFileName(),
+	fs.writeFileSync(OUTDIR + '/content/' + post.getFileName(),
 		generateContentHTML(post), 'utf8');
 });
