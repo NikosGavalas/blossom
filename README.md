@@ -4,7 +4,7 @@ A minimal personal blog generator.
 
 You write your blogposts in markdown, they get rendered and integrated into a static website.
 
-Live demo [here](https://nickgavalas.com).
+Live (limited) demo [here](https://nickgavalas.com).
 
 ## Features
 
@@ -17,14 +17,14 @@ Live demo [here](https://nickgavalas.com).
 
 ## Quick start
 Two ways. Download or git-clone the files and:
- - Either build a docker image with the provided Dockerfile with `docker build -t blossom .` and run the `run.sh` script (and visit localhost:8080 to see the website),
+ - Either build a docker image with the provided Dockerfile with `docker build -t blossom .` and run the `run.sh` script (and visit localhost in your browser to see the website),
  - or use `npm install` to install the required packages, and run `node blossom.js` to generate the `blog/` directory, which you can then throw to any webserver's document root (e.g. Apache or Nginx) to serve it.
 
 ## Configuration
 
 Edit the `config.js` file. The comments in the file are pretty descriptive to help you with this. 
 
-Afterwards, go to the `content/` directory and replace the example content with yours, and run again the `blossom.js` script to get your new site generated in the `blog/` directory.
+Afterwards, go to the `sample_content/` directory and replace the example content with yours (or specify a directory of your choice with the -i option), and run again the `blossom.js` script to get your new site generated in the `blog/` directory (or the one you can specify with the -o option).
 
 The markdown files must have filenames in the following form: __Example_Post_Title-22_Jan_2018.md__, so that files are rendered properly.
 

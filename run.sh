@@ -5,10 +5,11 @@
 
 docker rm blossom
 
+# recommended settings to run
 # add -d in the options to run 'in the background' (detached)
 docker run --name=blossom \
+	-v $PWD/sample_content:/home/node/sample_content \
 	-it \
-	-p 8080:8080 \
-	-v $PWD:/home/node/ \
-	blossom /bin/sh -c "npm install && node blossom.js && http-server ./blog"
+	-p 80:8080 \
+	blossom 
 

@@ -5,6 +5,11 @@ RUN npm install -g http-server
 
 WORKDIR /home/node
 
-EXPOSE 8080
+COPY . /home/node
 
+RUN npm install
+RUN node blossom.js
 
+CMD node blossom.js && http-server ./blog
+
+# EXPOSE 8080
