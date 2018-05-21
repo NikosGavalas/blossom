@@ -4,8 +4,6 @@ A minimal personal blog generator.
 
 You write your blogposts in markdown, they get rendered and integrated into a static website.
 
-Live (limited) demo [here](https://nickgavalas.com).
-
 ## Features
 
 - Easy deployment - no need for database
